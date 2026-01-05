@@ -1,0 +1,23 @@
+occupation_map = {
+    0: "other",
+    1: "academic_educator",
+    2: "artist",
+    3: "clerical_admin",
+    4: "college_grad_student",
+    5: "customer_service",
+    6: "doctor",
+    7: "engineer",
+    8: "farmer",
+    9: "homemaker",
+    10: "K12_student",
+    11: "lawyer",
+    12: "programmer",
+    13: "retired",
+    14: "sales_marketing",
+    15: "scientist",
+    16: "self_employed",
+    17: "technician",
+    18: "tradesman",
+    19: "unemployed",
+    20: "writer"
+}
