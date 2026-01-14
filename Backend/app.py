@@ -10,7 +10,6 @@ app = Flask(__name__)
 
 # --- Paths Configuration ---
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-POSTERS_DIR = os.path.join(BASE_DIR, "posters")
 DB_PATH = os.path.join(BASE_DIR, "recommender_system.db")
 
 # --- Load Model ---
@@ -28,15 +27,9 @@ def get_db():
 def get_poster_url(path_from_db):
     if path_from_db and str(path_from_db).lower() != 'none':
         filename = os.path.basename(path_from_db)
-        if os.path.exists(os.path.join(POSTERS_DIR, filename)):
-            return f"http://127.0.0.1:5000/posters/{filename}"
-    return ""
+        return f"posters/{filename}"
 
 # --- Routes ---
-
-@app.route('/posters/<path:filename>')
-def serve_poster(filename):
-    return send_from_directory(POSTERS_DIR, filename)
 
 @app.route("/signup", methods=["POST"])
 def signup():
@@ -129,4 +122,4 @@ def recommend(user_id):
     return jsonify({"movies": results})
 
 if __name__ == "__main__":
-    app.run(port=5000, debug=True)
+    app.run(host="0.0.0.0", port=8000, debug=True)

@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import os
 from config import occupation_map
 
 API_URL = "http://127.0.0.1:5000"
@@ -60,19 +61,31 @@ def set_page(page_name):
     st.session_state.active_page = page_name
 
 # --- Helper: Grid ---
+
 def display_movie_grid(movies, header_text):
     st.write(f"### {header_text}")
     if not movies:
         st.info("No movies found.")
         return
+
     for i in range(0, len(movies), 5):
         cols = st.columns(5)
         chunk = movies[i : i + 5]
+
         for idx, m in enumerate(chunk):
             with cols[idx]:
-                url = m.get('poster_url') or "https://via.placeholder.com/300x450/222222/eeeeee?text=No+Poster"
-                st.image(url)
-                st.markdown(f"<p class='movie-title'>{m['title']}</p>", unsafe_allow_html=True)
+                poster = m.get("poster_url")
+
+                if poster and os.path.exists(poster):
+                    st.image(poster)
+                else:
+                    st.image("https://via.placeholder.com/300x450/222222/eeeeee?text=No+Poster")
+
+                st.markdown(
+                    f"<p class='movie-title'>{m['title']}</p>",
+                    unsafe_allow_html=True
+                )
+
 
 # --- Header Row (Everything in line) ---
 # We use st.columns to keep the logo and button on the same horizontal plane
